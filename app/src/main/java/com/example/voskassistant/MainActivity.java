@@ -84,10 +84,22 @@ public class MainActivity extends AppCompatActivity {
                 }
                 model = new Model(modelDir.getAbsolutePath());
                 recognizer = new Recognizer(model, SAMPLE_RATE);
-                runOnUiThread(() -> Toast.makeText(this, "Vosk готов", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    tvResult.setText("Vosk готов. Модель загружена.");
+                    Toast.makeText(this, "Vosk готов", Toast.LENGTH_SHORT).show();
+                });
             } catch (IOException e) {
                 e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(this, "Ошибка Vosk: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    tvResult.setText("Ошибка Vosk: " + e.getMessage());
+                    Toast.makeText(this, "Ошибка Vosk: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+                    tvResult.setText("Критическая ошибка: " + e.getMessage());
+                    Toast.makeText(this, "Критическая ошибка: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
             }
         }).start();
     }
