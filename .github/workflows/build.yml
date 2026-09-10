@@ -21,6 +21,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Download Vosk model from Release
+        run: |
+          mkdir -p app/src/main/assets
+          cd app/src/main/assets
+          curl -L -o vosk-model-small-ru-0.22.zip \
+            https://github.com/ilia23star2-ops/VoskAssistant/releases/download/v1.0/vosk-model-small-ru-0.22.zip
+          unzip -q vosk-model-small-ru-0.22.zip
+          rm vosk-model-small-ru-0.22.zip
+          echo "=== Содержимое assets после распаковки ==="
+          ls -la
+          echo "=== Содержимое папки модели ==="
+          ls -la vosk-model-small-ru-0.22/ | head -30
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
